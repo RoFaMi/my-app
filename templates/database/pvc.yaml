@@ -9,7 +9,9 @@ metadata:
 spec:
   accessModes:
     - {{ .Values.database.persistence.accessMode }}
+  {{- if .Values.database.persistence.storageClass }}
   storageClassName: {{ .Values.database.persistence.storageClass }}
+  {{- end }}
   resources:
     requests:
       storage: {{ .Values.database.persistence.size }}
