@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "my-app.fullname" . }}-database
+  labels:
+    app: {{ include "my-app.name" . }}
+spec:
+  replicas: {{ .Values.database.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "my-app.name" . }}
+      component: database
+  template:
+    metadata:
+      labels:
+        app: {{ include "my-app.name" . }}
+        component: database
+    spec:
+      containers:
+        - name: database
+          image: {{ .Values.database.image.repository }}:{{ .Values.database.image.tag }}
+          ports:
+            - containerPort: {{ .Values.database.service.port }}
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/database/data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "my-app.fullname" . }}-pvc
