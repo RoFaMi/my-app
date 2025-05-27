@@ -1,5 +1,7 @@
 frontend:
-  image: "myregistry/frontend:latest"
+  image: 
+    repository: "myregistry/backend"
+    tag: "latest"
   replicas: 1
   service:
     type: ClusterIP
