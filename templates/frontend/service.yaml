@@ -1,24 +1,18 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
   name: {{ include "my-app.fullname" . }}-frontend
   labels:
     app: {{ include "my-app.name" . }}
     component: frontend
 spec:
-  replicas: {{ .Values.frontend.replicas }}
+  type: {{ .Values.frontend.service.type }}
+  ports:
+    - port: {{ .Values.frontend.service.port }}
+      targetPort: {{ .Values.frontend.service.port }}
+      protocol: TCP
+      name: http
   selector:
-    matchLabels:
-      app: {{ include "my-app.name" . }}
-      component: frontend
-  template:
-    metadata:
-      labels:
-        app: {{ include "my-app.name" . }}
-        component: frontend
-    spec:
-      containers:
-        - name: frontend
-          image: {{ .Values.frontend.image }}
-          ports:
-            - containerPort: {{ .Values.frontend.service.port }}
+    app: {{ include "my-app.name" . }}
+    component: frontend
+
