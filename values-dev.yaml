@@ -1,0 +1,22 @@
+frontend:
+  image: "myregistry/frontend:dev"
+  replicas: 1
+  service:
+    type: ClusterIP
+    port: 8080
+
+backend:
+  image: "myregistry/backend:dev"
+  replicas: 1
+  service:
+    type: ClusterIP
+    port: 8081
+
+database:
+  image: "myregistry/postgres:13"
+  replicas: 1
+  service:
+    type: ClusterIP
+    port: 5432
+  persistence:
+    enabled: false
