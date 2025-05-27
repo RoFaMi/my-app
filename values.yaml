@@ -1,0 +1,25 @@
+frontend:
+  image: "myregistry/frontend:latest"
+  replicas: 1
+  service:
+    type: ClusterIP
+    port: 80
+
+backend:
+  image: "myregistry/backend:latest"
+  replicas: 1
+  service:
+    type: ClusterIP
+    port: 8080
+
+database:
+  image: "myregistry/postgres:13"
+  replicas: 1
+  service:
+    type: ClusterIP
+    port: 5432
+  persistence:
+    enabled: true
+    storageClass: "standard"
+    accessMode: ReadWriteOnce
+    size: 8Gi
